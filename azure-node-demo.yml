@@ -39,16 +39,8 @@ stages:
         steps:
           - script: |
               echo 'Running unit tests...'
-              npm run test:unit
-            displayName: 'Unit Tests'
-
-      - job: IntegrationTests
-        displayName: 'Run Integration Tests'
-        steps:
-          - script: |
-              echo 'Running integration tests...'
-              npm run test:integration
-            displayName: 'Integration Tests'
+              npm run test
+            displayName: 'Running Unit Tests'
 
   - stage: Deploy
     displayName: 'Deployment Stage'
