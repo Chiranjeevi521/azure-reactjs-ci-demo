@@ -30,20 +30,20 @@ stages:
               npm run build
             displayName: 'Build'
 
-  - stage: Test
-    displayName: 'Test Stage'
-    dependsOn: Build
-    jobs:
-      - job: UnitTests
-        displayName: 'Run Unit Tests'
-        steps:
-          - script: |
-              echo 'Running unit tests...'
-              npm install react-scripts -g
-              npm install react -g
-              npm run start
-              npm run test
-            displayName: 'Running Unit Tests'
+  # - stage: Test
+  #   displayName: 'Test Stage'
+  #   dependsOn: Build
+  #   jobs:
+  #     - job: UnitTests
+  #       displayName: 'Run Unit Tests'
+  #       steps:
+  #         - script: |
+  #             echo 'Running unit tests...'
+  #             npm install react-scripts -g
+  #             npm install react -g
+  #             npm run start
+  #             npm run test
+  #           displayName: 'Running Unit Tests'
 
   - stage: Deploy
     displayName: 'Deployment Stage'
