@@ -40,6 +40,7 @@ stages:
         steps:
           - script: |
               echo 'Running unit tests...'
+              npm run start
               npm run test
             displayName: 'Running Unit Tests'
 
