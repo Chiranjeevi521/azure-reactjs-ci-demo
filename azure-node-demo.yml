@@ -23,7 +23,6 @@ stages:
           - script: |
               echo 'Installing dependencies...'
               npm install
-              npm install react-scripts
             displayName: 'Install Dependencies'
 
           - script: |
@@ -40,6 +39,7 @@ stages:
         steps:
           - script: |
               echo 'Running unit tests...'
+              npm install react-scripts -g
               npm run start
               npm run test
             displayName: 'Running Unit Tests'
