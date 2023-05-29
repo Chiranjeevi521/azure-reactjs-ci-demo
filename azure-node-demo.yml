@@ -23,6 +23,7 @@ stages:
           - script: |
               echo 'Installing dependencies...'
               npm install
+              npm install react-scripts
             displayName: 'Install Dependencies'
 
           - script: |
