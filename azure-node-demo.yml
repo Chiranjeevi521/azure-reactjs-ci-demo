@@ -54,32 +54,21 @@ stages:
     displayName: 'Deployment Stage'
     dependsOn: Test
     jobs:
-      - deployment: DeployWebApp
-        displayName: 'Deploy to Web App'
+      - deployment: DeployNetlify
+        displayName: 'Deploy to Netlify'
         environment: 'production'
         strategy:
           runOnce:
             deploy:
               steps:
-                - task: AzureWebApp@1
+                - task: Npm@1
+                  displayName: 'Install Netlify CLI'
                   inputs:
-                    azureSubscription: 'd4fce81a-9251-410a-9e8e-fd84d4ed2d34'
-                    appName: 'AzureDevopsDemo'
-                    package: '$(Pipeline.Workspace)/Deployments'
-                  displayName: 'Deploy to Web App'
-                - task: CopyFiles@2
-                  displayName: 'Copy app contents as artifact'
-                  inputs:
-                    SourceFolder: '$(Agent.WorkFolder)'
-                    Contents: '$(Agent.WorkFolder)/Deployments/*'
-                    TargetFolder: '$(Build.ArtifactStagingDirectory)'
-                    CleanTargetFolder: false
-                    overWrite: false
-                    flattenFolders: false
-                    preserveTimestamp: true
-                - task: PublishBuildArtifacts@1
-                  displayName: 'Publish build artifacts'
-                  inputs:
-                    pathtoPublish: '$(Build.ArtifactStagingDirectory)'
-                    artifactName: 'DeployedWebApp'
-                    artifactType: 'container'
+                    command: 'custom'
+                    verbose: false
+                    customCommand: 'install netlify-cli -g'
+
+                - script: |
+                    echo 'Deploying to Netlify...'
+                    netlify deploy --prod
+                  displayName: 'Deploy to Netlify'
