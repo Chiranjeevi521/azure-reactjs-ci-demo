@@ -63,7 +63,23 @@ stages:
               steps:
                 - task: AzureWebApp@1
                   inputs:
-                    azureSubscription: '<Azure Subscription>'
-                    appName: '<Web App Name>'
-                    package: '$(Pipeline.Workspace)/<Path to deployment package>'
+                    azureSubscription: 'd4fce81a-9251-410a-9e8e-fd84d4ed2d34'
+                    appName: 'AzureDevopsDemo'
+                    package: '$(Pipeline.Workspace)/Deployments'
                   displayName: 'Deploy to Web App'
+                - task: CopyFiles@2
+                  displayName: 'Copy release notes as artifacts'
+                  inputs:
+                    SourceFolder: '$(Agent.WorkFolder)'
+                    Contents: '$(Agent.WorkFolder)/build/releaseNotes*.txt'
+                    TargetFolder: '$(Build.ArtifactStagingDirectory)'
+                    CleanTargetFolder: false
+                    overWrite: false
+                    flattenFolders: false
+                    preserveTimestamp: true
+                  - task: PublishBuildArtifacts@1
+                     displayName: 'Publish build artifacts'
+                     inputs:
+                       pathtoPublish: '$(Build.ArtifactStagingDirectory)'
+                       artifactName: 'MobileApps'
+                       artifactType: 'container'
