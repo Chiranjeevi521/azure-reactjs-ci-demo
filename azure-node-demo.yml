@@ -68,18 +68,18 @@ stages:
                     package: '$(Pipeline.Workspace)/Deployments'
                   displayName: 'Deploy to Web App'
                 - task: CopyFiles@2
-                  displayName: 'Copy release notes as artifacts'
+                  displayName: 'Copy app contents as artifact'
                   inputs:
                     SourceFolder: '$(Agent.WorkFolder)'
-                    Contents: '$(Agent.WorkFolder)/build/releaseNotes*.txt'
+                    Contents: '$(Agent.WorkFolder)/Deployments/*'
                     TargetFolder: '$(Build.ArtifactStagingDirectory)'
                     CleanTargetFolder: false
                     overWrite: false
                     flattenFolders: false
                     preserveTimestamp: true
-                  - task: PublishBuildArtifacts@1
+                 - task: PublishBuildArtifacts@1
                      displayName: 'Publish build artifacts'
                      inputs:
                        pathtoPublish: '$(Build.ArtifactStagingDirectory)'
-                       artifactName: 'MobileApps'
+                       artifactName: 'DeployedWebApp'
                        artifactType: 'container'
