@@ -77,9 +77,9 @@ stages:
                     overWrite: false
                     flattenFolders: false
                     preserveTimestamp: true
-                 - task: PublishBuildArtifacts@1
-                     displayName: 'Publish build artifacts'
-                     inputs:
-                       pathtoPublish: '$(Build.ArtifactStagingDirectory)'
-                       artifactName: 'DeployedWebApp'
-                       artifactType: 'container'
+                - task: PublishBuildArtifacts@1
+                  displayName: 'Publish build artifacts'
+                  inputs:
+                    pathtoPublish: '$(Build.ArtifactStagingDirectory)'
+                    artifactName: 'DeployedWebApp'
+                    artifactType: 'container'
