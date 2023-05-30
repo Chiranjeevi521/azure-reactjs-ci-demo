@@ -68,5 +68,7 @@ stages:
 
                 - script: |
                     echo 'Deploying to Netlify...'
+                    cd $(Agent.WorkFolder)/1/s
+                    ls
                     netlify deploy "--auth=$(netlifyApiKey)" "--site=$(netlifySiteKey)" "--dir=$(Agent.WorkFolder)/1/s/build" --prod
                   displayName: 'Deploy to Netlify'
