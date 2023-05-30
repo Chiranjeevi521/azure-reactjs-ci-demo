@@ -33,67 +33,89 @@ stages:
               npm run build --verbose
             displayName: 'Build'
 
-  - stage: Test
-    displayName: 'Test Stage'
-    dependsOn: Build
-    jobs:
-      - job: UnitTests
-        displayName: 'Run Unit Tests'
+      - job: Test
+        displayName: 'Test Job'
         steps:
-          - task: NodeTool@0
-            inputs:
-              versionSpec: '12.x'
-            displayName: 'Install Node.js'
-
-          - script: |
-              echo 'Installing dependencies...'
-              npm install
-            displayName: 'Install Dependencies'
-
-          - script: |
-              echo 'Building application...'
-              npm run build --verbose
-            displayName: 'Build'
-
           - script: |
               echo 'Running unit tests...'
               CI=true npm test
             displayName: 'Running Unit Tests'
+            
+      - job: Deploy
+        displayName: 'Deployment Job'
+        steps:
+          - task: Npm@1
+            displayName: 'Install Netlify CLI'
+              inputs:
+                command: 'custom'
+                verbose: false
+                customCommand: 'install netlify-cli -g'
+          - script: |
+              echo 'Deploying to Netlify...'
+              netlify deploy "--auth=$(netlifyApiKey)" "--site=$(netlifySiteKey)" "--dir=$(Agent.WorkFolder)/1/s/build" --prod --verbose
+            displayName: 'Deploy to Netlify'
 
-  - stage: Deploy
-    displayName: 'Deployment Stage'
-    dependsOn: Test
-    jobs:
-      - deployment: DeployNetlify
-        displayName: 'Deploy to Netlify'
-        environment: 'production'
-        strategy:
-          runOnce:
-            deploy:
-              steps:
-                - task: NodeTool@0
-                  inputs:
-                    versionSpec: '12.x'
-                  displayName: 'Install Node.js'
+  # - stage: Test
+  #   displayName: 'Test Stage'
+  #   dependsOn: Build
+  #   jobs:
+  #     - job: UnitTests
+  #       displayName: 'Run Unit Tests'
+  #       steps:
+  #         - task: NodeTool@0
+  #           inputs:
+  #             versionSpec: '12.x'
+  #           displayName: 'Install Node.js'
 
-                - script: |
-                    echo 'Installing dependencies...'
-                    npm install
-                  displayName: 'Install Dependencies'
+  #         - script: |
+  #             echo 'Installing dependencies...'
+  #             npm install
+  #           displayName: 'Install Dependencies'
 
-                - script: |
-                    echo 'Building application...'
-                    npm run build --verbose
-                  displayName: 'Build'
+  #         - script: |
+  #             echo 'Building application...'
+  #             npm run build --verbose
+  #           displayName: 'Build'
 
-                - task: Npm@1
-                  displayName: 'Install Netlify CLI'
-                  inputs:
-                    command: 'custom'
-                    verbose: false
-                    customCommand: 'install netlify-cli -g'
+  #         - script: |
+  #             echo 'Running unit tests...'
+  #             CI=true npm test
+  #           displayName: 'Running Unit Tests'
 
-                - script: |
-                    echo 'Deploying to Netlify...'
-                    netlify deploy "--auth=$(netlifyApiKey)" "--site=$(netlifySiteKey)" "--dir=$(Agent.WorkFolder)/1/s/build" --prod --verbose
-                  displayName: 'Deploy to Netlify'
+  # - stage: Deploy
+  #   displayName: 'Deployment Stage'
+  #   dependsOn: Test
+  #   jobs:
+  #     - deployment: DeployNetlify
+  #       displayName: 'Deploy to Netlify'
+  #       environment: 'production'
+  #       strategy:
+  #         runOnce:
+  #           deploy:
+  #             steps:
+  #               - task: NodeTool@0
+  #                 inputs:
+  #                   versionSpec: '12.x'
+  #                 displayName: 'Install Node.js'
+
+  #               - script: |
+  #                   echo 'Installing dependencies...'
+  #                   npm install
+  #                 displayName: 'Install Dependencies'
+
+  #               - script: |
+  #                   echo 'Building application...'
+  #                   npm run build --verbose
+  #                 displayName: 'Build'
+
+  #               - task: Npm@1
+  #                 displayName: 'Install Netlify CLI'
+  #                 inputs:
+  #                   command: 'custom'
+  #                   verbose: false
+  #                   customCommand: 'install netlify-cli -g'
+
+  #               - script: |
+  #                   echo 'Deploying to Netlify...'
+  #                   netlify deploy "--auth=$(netlifyApiKey)" "--site=$(netlifySiteKey)" "--dir=$(Agent.WorkFolder)/1/s/build" --prod --verbose
+  #                 displayName: 'Deploy to Netlify'
