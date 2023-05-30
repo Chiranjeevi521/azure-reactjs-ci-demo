@@ -5,7 +5,7 @@ import App from './App';
 
 test('renders welcome message', () => {
   const { getByText } = render(<App />);
-  const headingElement = getByText(/Welcome to My App!/i);
+  const headingElement = getByText(/Welcome to App!/i);
   expect(headingElement).toBeInTheDocument();
 });
 
