@@ -46,10 +46,10 @@ stages:
         steps:
           - task: Npm@1
             displayName: 'Install Netlify CLI'
-              inputs:
-                command: 'custom'
-                verbose: false
-                customCommand: 'install netlify-cli -g'
+            inputs:
+              command: 'custom'
+              verbose: false
+              customCommand: 'install netlify-cli -g'
           - script: |
               echo 'Deploying to Netlify...'
               netlify deploy "--auth=$(netlifyApiKey)" "--site=$(netlifySiteKey)" "--dir=$(Agent.WorkFolder)/1/s/build" --prod --verbose
