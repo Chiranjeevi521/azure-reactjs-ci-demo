@@ -34,6 +34,7 @@ stages:
             displayName: 'Build'
 
       - job: Test
+        dependsOn: Build
         displayName: 'Test Job'
         steps:
           - script: |
@@ -42,6 +43,7 @@ stages:
             displayName: 'Running Unit Tests'
             
       - job: Deploy
+        dependsOn: Test
         displayName: 'Deployment Job'
         steps:
           - task: Npm@1
