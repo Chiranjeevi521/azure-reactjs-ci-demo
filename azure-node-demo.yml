@@ -33,20 +33,32 @@ stages:
               npm run build --verbose
             displayName: 'Build'
 
-  # - stage: Test
-  #   displayName: 'Test Stage'
-  #   dependsOn: Build
-  #   jobs:
-  #     - job: UnitTests
-  #       displayName: 'Run Unit Tests'
-  #       steps:
-  #         - script: |
-  #             echo 'Running unit tests...'
-  #             npm install react-scripts -g
-  #             npm install react -g
-  #             npm run start
-  #             npm run test
-  #           displayName: 'Running Unit Tests'
+  - stage: Test
+    displayName: 'Test Stage'
+    dependsOn: Build
+    jobs:
+      - job: UnitTests
+        displayName: 'Run Unit Tests'
+        steps:
+          - task: NodeTool@0
+            inputs:
+              versionSpec: '12.x'
+            displayName: 'Install Node.js'
+
+          - script: |
+              echo 'Installing dependencies...'
+              npm install
+            displayName: 'Install Dependencies'
+
+          - script: |
+              echo 'Building application...'
+              npm run build --verbose
+              displayName: 'Build'
+
+          - script: |
+              echo 'Running unit tests...'
+              npm run test
+            displayName: 'Running Unit Tests'
 
   - stage: Deploy
     displayName: 'Deployment Stage'
@@ -59,6 +71,21 @@ stages:
           runOnce:
             deploy:
               steps:
+                - task: NodeTool@0
+                  inputs:
+                    versionSpec: '12.x'
+                  displayName: 'Install Node.js'
+
+                - script: |
+                    echo 'Installing dependencies...'
+                    npm install
+                  displayName: 'Install Dependencies'
+
+                - script: |
+                    echo 'Building application...'
+                    npm run build --verbose
+                  displayName: 'Build'
+
                 - task: Npm@1
                   displayName: 'Install Netlify CLI'
                   inputs:
@@ -68,8 +95,5 @@ stages:
 
                 - script: |
                     echo 'Deploying to Netlify...'
-                    cd $(Agent.WorkFolder)/1/s
-                    ls -l
-                    npm run build --verbose
                     netlify deploy "--auth=$(netlifyApiKey)" "--site=$(netlifySiteKey)" "--dir=$(Agent.WorkFolder)/1/s/build" --prod --verbose
                   displayName: 'Deploy to Netlify'
