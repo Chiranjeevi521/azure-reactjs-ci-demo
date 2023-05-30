@@ -70,5 +70,5 @@ stages:
                     echo 'Deploying to Netlify...'
                     cd $(Agent.WorkFolder)
                     ls -l
-                    netlify deploy "--auth=$(netlifyApiKey)" "--site=$(netlifySiteKey)" "--dir=./build" --prod --verbose
+                    netlify deploy "--auth=$(netlifyApiKey)" "--site=$(netlifySiteKey)" "--dir=/home/vsts/work/1/s/build" --prod --verbose
                   displayName: 'Deploy to Netlify'
