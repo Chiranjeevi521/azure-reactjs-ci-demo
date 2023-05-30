@@ -62,7 +62,7 @@ stages:
 
   - stage: Deploy
     displayName: 'Deployment Stage'
-    dependsOn: Build
+    dependsOn: Test
     jobs:
       - deployment: DeployNetlify
         displayName: 'Deploy to Netlify'
