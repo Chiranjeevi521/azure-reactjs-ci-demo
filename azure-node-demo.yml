@@ -53,7 +53,7 @@ stages:
           - script: |
               echo 'Building application...'
               npm run build --verbose
-              displayName: 'Build'
+            displayName: 'Build'
 
           - script: |
               echo 'Running unit tests...'
