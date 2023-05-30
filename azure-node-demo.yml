@@ -68,6 +68,7 @@ stages:
 
                 - script: |
                     echo 'Deploying to Netlify...'
+                    cd $(Agent.WorkFolder)/1/s
                     ls -l
                     npm run build --verbose
                     netlify deploy "--auth=$(netlifyApiKey)" "--site=$(netlifySiteKey)" "--dir=$(Agent.WorkFolder)/1/s/build" --prod --verbose
