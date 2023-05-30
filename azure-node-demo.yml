@@ -12,12 +12,13 @@ pool:
   vmImage: 'ubuntu-latest'
 
 stages:
-  - stage: Build
-    displayName: 'Build Stage'
+  - stage: BuildAndDeploy
+    displayName: 'Build And Deployment Stage'
     jobs:
       - job: Build
         displayName: 'Build Job'
         steps:
+
           - task: NodeTool@0
             inputs:
               versionSpec: '12.x'
@@ -33,25 +34,60 @@ stages:
               npm run build --verbose
             displayName: 'Build'
 
+
       - job: Test
         dependsOn: Build
         displayName: 'Test Job'
         steps:
+
+          - task: NodeTool@0
+            inputs:
+              versionSpec: '12.x'
+            displayName: 'Install Node.js'
+
+          - script: |
+              echo 'Installing dependencies...'
+              npm install
+            displayName: 'Install Dependencies'
+
+          - script: |
+              echo 'Building application...'
+              npm run build --verbose
+            displayName: 'Build'
+
           - script: |
               echo 'Running unit tests...'
               CI=true npm test
             displayName: 'Running Unit Tests'
-            
+
+
       - job: Deploy
         dependsOn: Test
         displayName: 'Deployment Job'
         steps:
+
+          - task: NodeTool@0
+            inputs:
+              versionSpec: '12.x'
+            displayName: 'Install Node.js'
+
+          - script: |
+              echo 'Installing dependencies...'
+              npm install
+            displayName: 'Install Dependencies'
+
+          - script: |
+              echo 'Building application...'
+              npm run build --verbose
+            displayName: 'Build'
+
           - task: Npm@1
             displayName: 'Install Netlify CLI'
             inputs:
               command: 'custom'
               verbose: false
               customCommand: 'install netlify-cli -g'
+
           - script: |
               echo 'Deploying to Netlify...'
               netlify deploy "--auth=$(netlifyApiKey)" "--site=$(netlifySiteKey)" "--dir=$(Agent.WorkFolder)/1/s/build" --prod --verbose
