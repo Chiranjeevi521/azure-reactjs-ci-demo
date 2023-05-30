@@ -30,7 +30,7 @@ stages:
 
           - script: |
               echo 'Building application...'
-              npm run build
+              npm run build --verbose
             displayName: 'Build'
 
   # - stage: Test
@@ -69,6 +69,6 @@ stages:
                 - script: |
                     echo 'Deploying to Netlify...'
                     cd $(Agent.WorkFolder)/1/s
-                    ls
-                    netlify deploy "--auth=$(netlifyApiKey)" "--site=$(netlifySiteKey)" "--dir=$(Agent.WorkFolder)/1/s/build" --prod
+                    ls -l
+                    netlify deploy "--auth=$(netlifyApiKey)" "--site=$(netlifySiteKey)" "--dir=$(Agent.WorkFolder)/1/s/build" --prod --verbose
                   displayName: 'Deploy to Netlify'
