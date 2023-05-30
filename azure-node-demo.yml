@@ -57,7 +57,7 @@ stages:
 
           - script: |
               echo 'Running unit tests...'
-              npm run test
+              CI=true npm test
             displayName: 'Running Unit Tests'
 
   - stage: Deploy
