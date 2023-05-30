@@ -65,5 +65,5 @@ stages:
 
                 - script: |
                     echo 'Deploying to Netlify...'
-                    netlify deploy "--auth={E3-OKJelAYPBMPGkgLWFno_MO3cIuzZ5YJWqDUMRRMQ}" "--site={cc48e103-3486-49e2-a20c-13cdd330496c}" "--dir=$(Agent.WorkFolder)/1/s/build" --prod
+                    netlify deploy "--auth=E3-OKJelAYPBMPGkgLWFno_MO3cIuzZ5YJWqDUMRRMQ" "--site=cc48e103-3486-49e2-a20c-13cdd330496c" "--dir=$(Agent.WorkFolder)/1/s/build" --prod
                   displayName: 'Deploy to Netlify'
