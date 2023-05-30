@@ -20,7 +20,7 @@ function App() {
         </p>
       </div>
       <div>
-        <h2>Display ['Apple', 'Banana', 'Cherry'] in list format</h2>
+        <h2>Display all 3 fruits list format</h2>
         <p>Uh-oh! There's a bug in the function below:</p>
         <ul>
           {items.map((item) => (
