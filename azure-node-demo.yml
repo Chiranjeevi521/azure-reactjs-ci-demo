@@ -1,5 +1,3 @@
-# File: azure-pipelines.yml
-
 variables:
 - group: AzureDemo
 
@@ -21,7 +19,7 @@ stages:
 
           - task: NodeTool@0
             inputs:
-              versionSpec: '12.x'
+              versionSpec: '19.x'
             displayName: 'Install Node.js'
 
           - script: |
@@ -42,7 +40,7 @@ stages:
 
           - task: NodeTool@0
             inputs:
-              versionSpec: '12.x'
+              versionSpec: '19.x'
             displayName: 'Install Node.js'
 
           - script: |
@@ -68,14 +66,14 @@ stages:
 
           - task: NodeTool@0
             inputs:
-              versionSpec: '12.x'
+              versionSpec: '19.x'
             displayName: 'Install Node.js'
 
           - script: |
               echo 'Installing Nelify CLI...'
               npm i netlify-cli -g
             displayName: 'Install Netlify CLI'
-            
+
           - script: |
               echo 'Installing dependencies...'
               npm install
@@ -90,68 +88,3 @@ stages:
               echo 'Deploying to Netlify...'
               netlify deploy "--auth=$(netlifyApiKey)" "--site=$(netlifySiteKey)" "--dir=$(Agent.WorkFolder)/1/s/build" --prod --verbose
             displayName: 'Deploy to Netlify'
-
-  # - stage: Test
-  #   displayName: 'Test Stage'
-  #   dependsOn: Build
-  #   jobs:
-  #     - job: UnitTests
-  #       displayName: 'Run Unit Tests'
-  #       steps:
-  #         - task: NodeTool@0
-  #           inputs:
-  #             versionSpec: '12.x'
-  #           displayName: 'Install Node.js'
-
-  #         - script: |
-  #             echo 'Installing dependencies...'
-  #             npm install
-  #           displayName: 'Install Dependencies'
-
-  #         - script: |
-  #             echo 'Building application...'
-  #             npm run build --verbose
-  #           displayName: 'Build'
-
-  #         - script: |
-  #             echo 'Running unit tests...'
-  #             CI=true npm test
-  #           displayName: 'Running Unit Tests'
-
-  # - stage: Deploy
-  #   displayName: 'Deployment Stage'
-  #   dependsOn: Test
-  #   jobs:
-  #     - deployment: DeployNetlify
-  #       displayName: 'Deploy to Netlify'
-  #       environment: 'production'
-  #       strategy:
-  #         runOnce:
-  #           deploy:
-  #             steps:
-  #               - task: NodeTool@0
-  #                 inputs:
-  #                   versionSpec: '12.x'
-  #                 displayName: 'Install Node.js'
-
-  #               - script: |
-  #                   echo 'Installing dependencies...'
-  #                   npm install
-  #                 displayName: 'Install Dependencies'
-
-  #               - script: |
-  #                   echo 'Building application...'
-  #                   npm run build --verbose
-  #                 displayName: 'Build'
-
-  #               - task: Npm@1
-  #                 displayName: 'Install Netlify CLI'
-  #                 inputs:
-  #                   command: 'custom'
-  #                   verbose: false
-  #                   customCommand: 'install netlify-cli -g'
-
-  #               - script: |
-  #                   echo 'Deploying to Netlify...'
-  #                   netlify deploy "--auth=$(netlifyApiKey)" "--site=$(netlifySiteKey)" "--dir=$(Agent.WorkFolder)/1/s/build" --prod --verbose
-  #                 displayName: 'Deploy to Netlify'
