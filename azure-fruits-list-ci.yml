@@ -13,7 +13,7 @@ stages:
   - stage: BuildTestAndDeploy
     displayName: 'Stage to build, test and deploy fruits list app'
     jobs:
-      - job: Build Test And Deploy Job
+      - job: BuildTestAndDeploy
         displayName: 'Build Test And Deploy Fruts List App'
         steps:
 
