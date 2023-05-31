@@ -11,57 +11,10 @@ pool:
 
 stages:
   - stage: BuildTestAndDeploy
-    displayName: 'Stage to build, test and deploy demo app'
+    displayName: 'Stage to build, test and deploy fruits list app'
     jobs:
-      - job: Build
-        displayName: 'Build Job'
-        steps:
-
-          - task: NodeTool@0
-            inputs:
-              versionSpec: '16.x'
-            displayName: 'Install Node.js'
-
-          - script: |
-              echo 'Installing dependencies...'
-              npm install
-            displayName: 'Install Dependencies'
-
-          - script: |
-              echo 'Building application...'
-              npm run build --verbose
-            displayName: 'Build'
-
-
-      - job: Test
-        dependsOn: Build
-        displayName: 'Test Job'
-        steps:
-
-          - task: NodeTool@0
-            inputs:
-              versionSpec: '16.x'
-            displayName: 'Install Node.js'
-
-          - script: |
-              echo 'Installing dependencies...'
-              npm install
-            displayName: 'Install Dependencies'
-
-          - script: |
-              echo 'Building application...'
-              npm run build --verbose
-            displayName: 'Build'
-
-          - script: |
-              echo 'Running unit tests...'
-              CI=true npm test
-            displayName: 'Running Unit Tests'
-
-
-      - job: Deploy
-        dependsOn: Test
-        displayName: 'Deployment Job'
+      - job: Build Test And Deploy Job
+        displayName: 'Build Test And Deploy Fruts List App'
         steps:
 
           - task: NodeTool@0
@@ -83,6 +36,11 @@ stages:
               echo 'Building application...'
               npm run build --verbose
             displayName: 'Build'
+
+          - script: |
+              echo 'Running unit tests...'
+              CI=true npm test
+            displayName: 'Running Unit Tests'
 
           - script: |
               echo 'Deploying to Netlify...'
