@@ -25,7 +25,7 @@ function App() {
         <p>Uh-oh! There's a bug in the function below:</p>
         <ul>
           {items.map((item) => (
-            <li>{item.id}</li>
+            <li>{item}</li>
           ))}
         </ul>
         <p>Can you spot the issue?</p>

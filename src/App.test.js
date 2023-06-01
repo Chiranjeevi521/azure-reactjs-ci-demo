@@ -14,3 +14,9 @@ test('renders description', () => {
   const descriptionElement = getByText(/This is a demo application for Azure DevOps pipelines./i);
   expect(descriptionElement).toBeInTheDocument();
 });
+
+test('renders fruit name', () => {
+  const { getByText } = render(<App />);
+  const descriptionElement = getByText(/Cherry/i);
+  expect(descriptionElement).toBeInTheDocument();
+});
