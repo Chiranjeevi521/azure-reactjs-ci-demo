@@ -1,8 +1,8 @@
 import React from 'react';
 
 function App() {
-  //const items = ['Apple', 'Banana', 'Cherry'];
-  const items = ['Apple', 'Banana', 'Car'];
+  const items = ['Apple', 'Banana', 'Cherry'];
+  //const items = ['Apple', 'Banana', 'Car'];
   return (
     <div>
       <h1>Welcome to App!</h1>
